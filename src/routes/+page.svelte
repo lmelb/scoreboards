@@ -1,15 +1,9 @@
 <script>
 	import Button from '$lib/components/ui/button/button.svelte';
-	import {
-		Card,
-		CardHeader,
-		CardTitle,
-		CardDescription,
-		CardContent
-	} from '$lib/components/ui/card';
+	import { Card, CardHeader, CardTitle, CardContent } from '$lib/components/ui/card';
 	import { getPlayersState } from '$lib/playerState';
 
-	const players = getPlayersState().getPlayers();
+	const players = getPlayersState().players;
 </script>
 
 <Card>

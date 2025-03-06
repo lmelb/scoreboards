@@ -4,28 +4,32 @@ import { check } from './utils';
 import { json } from '@sveltejs/kit';
 
 export class PlayersState {
-	private readonly players = new PersistedState<Player[]>('players', [], {
+	private readonly playersState = new PersistedState<Player[]>('players', [], {
 		serializer: Player.serializer()
 	});
 
-	getPlayers() {
-		return this.players.current;
+	get players() {
+		return this.playersState.current;
 	}
 
-	addPlayer(player: Player) {
-		check(!this.playerExsits(player), `Player "${player.name}" already exists.`, PlayerError);
+	add(player: Player) {
+		check(!this.exsits(player), `Player ${player.name} already exists.`, PlayerError);
 
-		this.players.current = [...this.players.current, player];
+		this.playersState.current = [...this.playersState.current, player];
 	}
 
-	removePlayer(player: Player) {
-		check(this.playerExsits(player), `Player "${player.name}" does not exists.`, PlayerError);
+	remove(player: Player) {
+		check(this.exsits(player), `Player ${player.name} does not exists.`, PlayerError);
 
-		this.players.current = this.getPlayers().filter((it) => !it.equals(player));
+		this.playersState.current = this.players.filter((it) => !it.equals(player));
 	}
 
-	private playerExsits(player: Player): boolean {
-		return this.getPlayers().some((it) => it.equals(player));
+	exsits(player: Player): boolean {
+		return this.players.some((it) => it.equals(player));
+	}
+
+	nameExsits(playerName: string): boolean {
+		return this.players.some((it) => it.name.toLowerCase() === playerName.toLowerCase());
 	}
 }
 
