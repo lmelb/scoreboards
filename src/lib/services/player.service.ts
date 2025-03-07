@@ -1,8 +1,8 @@
 import { Context, PersistedState } from 'runed';
-import { Player, PlayerError } from './models/Player';
-import { check } from './utils';
+import { Player, PlayerError } from '../models/Player';
+import { check } from '../utils';
 
-export class PlayersState {
+export class PlayersService {
 	private readonly playersState = new PersistedState<Player[]>('players', [], {
 		serializer: Player.serializer()
 	});
@@ -32,12 +32,12 @@ export class PlayersState {
 	}
 }
 
-const playersContext = new Context<PlayersState>('players');
+const playersContext = new Context<PlayersService>('players');
 
-export function setPlayersState(): PlayersState {
-	return playersContext.set(new PlayersState());
+export function setPlayersService(): PlayersService {
+	return playersContext.set(new PlayersService());
 }
 
-export function getPlayersState(): PlayersState {
+export function getPlayersService(): PlayersService {
 	return playersContext.get();
 }

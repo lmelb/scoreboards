@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { getPlayersState } from '$lib/player-state';
-	import { setMaxchenState } from './maxchen-state';
+	import { getPlayersService } from '$lib/services/player.service';
+	import { setMaxchenService } from '../../lib/services/maxchen.service';
 
-	const players = getPlayersState().players;
-	setMaxchenState(players);
+	const players = getPlayersService().players;
+	setMaxchenService(players);
 	let { children } = $props();
 </script>
 

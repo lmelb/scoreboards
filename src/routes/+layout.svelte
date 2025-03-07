@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { setPlayersState } from '$lib/player-state';
+	import { setPlayersService } from '$lib/services/player.service';
 	import { ModeWatcher } from 'mode-watcher';
 	import '../app.css';
 	import { Dices } from 'lucide-svelte';
@@ -7,7 +7,7 @@
 	import { Toaster } from '$lib/components/ui/sonner';
 	let { children } = $props();
 
-	setPlayersState();
+	setPlayersService();
 </script>
 
 <ModeWatcher />

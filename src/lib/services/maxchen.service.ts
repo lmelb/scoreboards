@@ -2,7 +2,7 @@ import { MaxchenRound } from '$lib/models/Maxchen';
 import type { Player } from '$lib/models/Player';
 import { Context, PersistedState } from 'runed';
 
-export class MaxchenState {
+export class MaxchenService {
 	private readonly state: PersistedState<MaxchenRound[]>;
 	readonly playerNames: string[];
 
@@ -49,12 +49,12 @@ export class MaxchenState {
 	}
 }
 
-const context = new Context<MaxchenState>('maxchen');
+const context = new Context<MaxchenService>('maxchen');
 
-export function setMaxchenState(players: Player[]): MaxchenState {
-	return context.set(new MaxchenState(players.map((it) => it.name)));
+export function setMaxchenService(players: Player[]): MaxchenService {
+	return context.set(new MaxchenService(players.map((it) => it.name)));
 }
 
-export function getMaxchenState(): MaxchenState {
+export function getMaxchenService(): MaxchenService {
 	return context.get();
 }

@@ -10,32 +10,32 @@
 		TableRow
 	} from '$lib/components/ui/table';
 	import TableFooter from '$lib/components/ui/table/table-footer.svelte';
-	import { getPlayersState } from '$lib/player-state';
+	import { getPlayersService } from '$lib/services/player.service';
 	import { Play, Plus, RotateCw } from 'lucide-svelte';
-	import { getMaxchenState } from './maxchen-state';
+	import { getMaxchenService } from '../../lib/services/maxchen.service';
 
-	const players = getPlayersState().players;
-	const maxchenState = getMaxchenState();
+	const players = getPlayersService().players;
+	const maxchenService = getMaxchenService();
 </script>
 
-{#if maxchenState.rounds.length === 0}
-	<Button onclick={() => maxchenState.newRound()}><Play /> Start Game</Button>
+{#if maxchenService.rounds.length === 0}
+	<Button onclick={() => maxchenService.newRound()}><Play /> Start Game</Button>
 {:else}
 	<div class="flex justify-end gap-2">
-		<Button variant="outline" onclick={() => maxchenState.reset()}><RotateCw /></Button>
-		<Button onclick={() => maxchenState.newRound()}><Plus /> New round</Button>
+		<Button variant="outline" onclick={() => maxchenService.reset()}><RotateCw /></Button>
+		<Button onclick={() => maxchenService.newRound()}><Plus /> New Round</Button>
 	</div>
 	<Table>
 		<TableHeader>
 			<TableRow>
 				<TableHead class="w-[20px]">#</TableHead>
-				{#each maxchenState.playerNames as playerName}
+				{#each maxchenService.playerNames as playerName}
 					<TableHead>{playerName}</TableHead>
 				{/each}
 			</TableRow>
 		</TableHeader>
 		<TableBody>
-			{#each maxchenState.rounds as round}
+			{#each maxchenService.rounds as round}
 				<TableRow>
 					<TableCell>{round.index}</TableCell>
 					{#each round.scores as score}
@@ -51,7 +51,7 @@
 				<TableCell></TableCell>
 				{#each players as player}
 					<TableCell>
-						<Button variant="outline" onclick={() => maxchenState.looseRound(player.name)}>
+						<Button variant="outline" onclick={() => maxchenService.looseRound(player.name)}>
 							{player.name}
 						</Button>
 					</TableCell>

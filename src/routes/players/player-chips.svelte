@@ -1,14 +1,14 @@
 <script lang="ts">
 	import { CloseableBadge } from '$lib/components/closeable-badge';
 	import type { Player } from '$lib/models/Player';
-	import { getPlayersState } from '$lib/player-state';
+	import { getPlayersService } from '$lib/services/player.service';
 
-	const playerState = getPlayersState();
+	const playerService getPlayersServicete();
 </script>
 
 <div class="flex flex-wrap gap-2">
-	{#each playerState.players as player}
-		<CloseableBadge close={() => playerState.remove(player)}>
+	{#each playerService.players as player}
+		<CloseableBadge close={() => playerService.remove(player)}>
 			{player.name}
 		</CloseableBadge>
 	{/each}

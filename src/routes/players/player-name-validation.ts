@@ -1,9 +1,9 @@
-import { PlayersState } from '$lib/player-state';
+import { PlayersService } from '$lib/services/player.service';
 import { z } from 'zod';
 
 export function validatePlayerName(
 	playerName: string,
-	playersState: PlayersState
+	playersState: PlayersService
 ): z.SafeParseReturnType<string, string> {
 	return z
 		.string()

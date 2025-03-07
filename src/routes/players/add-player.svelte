@@ -4,11 +4,11 @@
 	import { Label } from '$lib/components/ui/label';
 
 	import { Player } from '$lib/models/Player';
-	import { getPlayersState } from '$lib/player-state';
+	import { getPlayersService } from '$lib/services/player.service';
 	import { UserPlus } from 'lucide-svelte';
 	import { validatePlayerName } from './player-name-validation';
 
-	const playerState = getPlayersState();
+	const playerService getPlayersServicete();
 
 	let playerNameInput = $state<HTMLInputElement>()!;
 
@@ -16,7 +16,7 @@
 	let validation: Validation = $state({ valid: false, errors: [] });
 
 	function onchange() {
-		const validatedPlayer = validatePlayerName(playerNameInput.value, playerState);
+		const validatedPlayer = validatePlayerName(playerNameInput.value, playerService);
 		validation = {
 			valid: validatedPlayer.success,
 			errors: validatedPlayer.error?.issues.map((error) => error.message) ?? []
@@ -28,7 +28,7 @@
 		if (!validation.valid) return;
 
 		const player = new Player(playerNameInput.value);
-		playerState.add(player);
+		playerService.add(player);
 
 		playerNameInput.value = '';
 		playerNameInput.focus();
