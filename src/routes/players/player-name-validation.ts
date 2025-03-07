@@ -1,4 +1,4 @@
-import { PlayersState } from '$lib/playerState';
+import { PlayersState } from '$lib/player-state';
 import { z } from 'zod';
 
 export function validatePlayerName(

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { CloseableBadge } from '$lib/components/closeable-badge';
 	import type { Player } from '$lib/models/Player';
-	import { getPlayersState } from '$lib/playerState';
+	import { getPlayersState } from '$lib/player-state';
 
 	const playerState = getPlayersState();
 </script>

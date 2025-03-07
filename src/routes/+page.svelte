@@ -1,7 +1,7 @@
 <script>
 	import Button from '$lib/components/ui/button/button.svelte';
 	import { Card, CardHeader, CardTitle, CardContent } from '$lib/components/ui/card';
-	import { getPlayersState } from '$lib/playerState';
+	import { getPlayersState } from '$lib/player-state';
 
 	const players = getPlayersState().players;
 </script>

@@ -1,7 +1,6 @@
-import { Context, PersistedState, StateHistory } from 'runed';
+import { Context, PersistedState } from 'runed';
 import { Player, PlayerError } from './models/Player';
 import { check } from './utils';
-import { json } from '@sveltejs/kit';
 
 export class PlayersState {
 	private readonly playersState = new PersistedState<Player[]>('players', [], {

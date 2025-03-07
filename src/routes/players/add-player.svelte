@@ -4,7 +4,7 @@
 	import { Label } from '$lib/components/ui/label';
 
 	import { Player } from '$lib/models/Player';
-	import { getPlayersState } from '$lib/playerState';
+	import { getPlayersState } from '$lib/player-state';
 	import { UserPlus } from 'lucide-svelte';
 	import { validatePlayerName } from './player-name-validation';
 
@@ -12,13 +12,8 @@
 
 	let playerNameInput = $state<HTMLInputElement>()!;
 
-	let validation: { valid: boolean; errors: string[] } = $state<{
-		valid: boolean;
-		errors: string[];
-	}>({
-		valid: false,
-		errors: []
-	});
+	type Validation = { valid: boolean; errors: string[] };
+	let validation: Validation = $state({ valid: false, errors: [] });
 
 	function onchange() {
 		const validatedPlayer = validatePlayerName(playerNameInput.value, playerState);

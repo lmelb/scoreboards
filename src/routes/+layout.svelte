@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { setPlayersState } from '$lib/playerState';
+	import { setPlayersState } from '$lib/player-state';
 	import { ModeWatcher } from 'mode-watcher';
 	import '../app.css';
 	import { Dices } from 'lucide-svelte';
@@ -24,6 +24,9 @@
 			</a>
 			<a href="/players" class="text-foreground transition-colors hover:text-foreground">
 				Players
+			</a>
+			<a href="/maxchen" class="text-foreground transition-colors hover:text-foreground">
+				Mäxchen
 			</a>
 		</nav>
 		<LightSwith />
