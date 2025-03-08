@@ -16,9 +16,11 @@ export class MaxchenService {
 		this.handlePlayerChange();
 		this.history = new StateHistory<MaxchenRound[]>(
 			() =>
-				$state
-					.snapshot(this.roundsState.current)
-					.map((it) => new MaxchenRound(it.index, [], it.scores)),
+				$state.snapshot(this.roundsState.current).map((it) => {
+					const round = new MaxchenRound([]);
+					round.scores = it.scores;
+					return round;
+				}),
 			(c) => (this.roundsState.current = c)
 		);
 	}
@@ -32,13 +34,21 @@ export class MaxchenService {
 	}
 
 	newRound() {
-		this.rounds.push(new MaxchenRound(this.rounds.length, this.playerNames));
+		this.rounds.push(new MaxchenRound(this.playerNames));
 	}
 
 	looseRound(playerName: string) {
 		this.roundsState.current[this.roundsState.current.length - 1].loose(playerName);
 		this.roundsState.current = [...this.roundsState.current];
-		if (this.currentRound.scores.some((score) => score.value >= 5)) this.newRound();
+		if (
+			this.currentRound.scores
+				.values()
+				.toArray()
+				.some((score) => score >= 5)
+		) {
+			this.newRound();
+		}
+		console.log($state.snapshot(this.rounds));
 	}
 
 	reset() {
@@ -49,10 +59,8 @@ export class MaxchenService {
 	private handlePlayerChange() {
 		let playersHasChanged = false;
 		this.roundsState.current.forEach((round) => {
-			round.scores = round.scores.filter((score) => this.playerNames.includes(score.playerName));
-			playersHasChanged = this.playerNames.some(
-				(activePlayer) => !round.scores.map((score) => score.playerName).includes(activePlayer)
-			);
+			round.scores.keys().filter((playerName) => this.playerNames.includes(playerName));
+			playersHasChanged = this.playerNames.some((name) => !round.scores.has(name));
 		});
 
 		if (playersHasChanged) this.newRound();

@@ -35,7 +35,6 @@
 	<Table>
 		<TableHeader>
 			<TableRow>
-				<TableHead class="w-[20px]">#</TableHead>
 				{#each maxchenService.playerNames as playerName}
 					<TableHead>{playerName}</TableHead>
 				{/each}
@@ -44,26 +43,20 @@
 		<TableBody>
 			{#each maxchenService.rounds as round}
 				<TableRow>
-					<TableCell>{round.index}</TableCell>
-					{#each round.scores as score}
+					{#each round.scores as [playerName, score]}
 						<TableCell>
-							<Tally value={score.value} />
+							<Tally value={score} />
 						</TableCell>
 					{/each}
 				</TableRow>
 			{/each}
 		</TableBody>
-		<TableFooter>
-			<TableRow>
-				<TableCell></TableCell>
-				{#each maxchenService.playerNames as playerName}
-					<TableCell>
-						<Button variant="outline" onclick={() => maxchenService.looseRound(playerName)}>
-							{playerName}
-						</Button>
-					</TableCell>
-				{/each}
-			</TableRow>
-		</TableFooter>
 	</Table>
+	<div class="flex gap-2">
+		{#each maxchenService.playerNames as playerName}
+			<Button variant="outline" onclick={() => maxchenService.looseRound(playerName)}>
+				{playerName}
+			</Button>
+		{/each}
+	</div>
 {/if}

@@ -1,30 +1,26 @@
-export type Score = {
-	playerName: string;
-	value: number;
-};
 export class MaxchenRound {
-	readonly index: number;
-	scores: Score[];
+	scores = new Map<string, number>();
 
-	constructor(index: number, playerNames: string[], scores?: Score[]) {
-		this.index = index;
-		this.scores = playerNames.map((playerName) => ({ playerName, value: 0 }));
-
-		if (scores) this.scores = scores;
+	constructor(playerNames: string[]) {
+		playerNames.forEach((playerName) => {
+			this.scores.set(playerName, 0);
+		});
 	}
 
 	loose(playerName: string) {
-		this.scores = this.scores.map((score) => {
-			if (score.playerName === playerName) score.value++;
-			return score;
-		});
+		this.scores.set(playerName, this.scores.get(playerName)! + 1);
 	}
 
 	static serializer(): MaxchenSerializer {
 		return {
-			serialize: (value: MaxchenRound[]) => JSON.stringify(value),
+			serialize: (value) =>
+				JSON.stringify(value.map((round) => Array.from(round.scores.entries()))),
 			deserialize: (data) =>
-				JSON.parse(data).map((d: MaxchenRound) => new MaxchenRound(d.index, [], d.scores))
+				JSON.parse(data).map((round: [string, number][]) => {
+					const maxchenRound = new MaxchenRound([]);
+					maxchenRound.scores = new Map<string, number>(round);
+					return maxchenRound;
+				})
 		};
 	}
 }
