@@ -10,11 +10,9 @@
 		TableRow
 	} from '$lib/components/ui/table';
 	import TableFooter from '$lib/components/ui/table/table-footer.svelte';
-	import { getPlayersService } from '$lib/services/player.service';
-	import { Play, Plus, RotateCw } from 'lucide-svelte';
-	import { getMaxchenService } from '../../lib/services/maxchen.service';
+	import { Play, Redo, RotateCw, Undo } from 'lucide-svelte';
+	import { getMaxchenService } from '../../lib/services/maxchen.service.svelte';
 
-	const players = getPlayersService().players;
 	const maxchenService = getMaxchenService();
 </script>
 
@@ -22,8 +20,17 @@
 	<Button onclick={() => maxchenService.newRound()}><Play /> Start Game</Button>
 {:else}
 	<div class="flex justify-end gap-2">
+		<Button
+			variant="outline"
+			disabled={!maxchenService.history.canUndo}
+			onclick={maxchenService.history.undo}><Undo /></Button
+		>
 		<Button variant="outline" onclick={() => maxchenService.reset()}><RotateCw /></Button>
-		<Button onclick={() => maxchenService.newRound()}><Plus /> New Round</Button>
+		<Button
+			variant="outline"
+			disabled={!maxchenService.history.canRedo}
+			onclick={maxchenService.history.redo}><Redo /></Button
+		>
 	</div>
 	<Table>
 		<TableHeader>
@@ -49,10 +56,10 @@
 		<TableFooter>
 			<TableRow>
 				<TableCell></TableCell>
-				{#each players as player}
+				{#each maxchenService.playerNames as playerName}
 					<TableCell>
-						<Button variant="outline" onclick={() => maxchenService.looseRound(player.name)}>
-							{player.name}
+						<Button variant="outline" onclick={() => maxchenService.looseRound(playerName)}>
+							{playerName}
 						</Button>
 					</TableCell>
 				{/each}

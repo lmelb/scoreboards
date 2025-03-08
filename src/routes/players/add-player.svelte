@@ -8,7 +8,7 @@
 	import { UserPlus } from 'lucide-svelte';
 	import { validatePlayerName } from './player-name-validation';
 
-	const playerService getPlayersServicete();
+	const playerService = getPlayersService();
 
 	let playerNameInput = $state<HTMLInputElement>()!;
 

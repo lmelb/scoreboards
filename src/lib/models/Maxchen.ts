@@ -1,21 +1,14 @@
-import { check } from '$lib/utils';
-import type { Tally1 } from 'lucide-svelte';
-
-export class Score {
+export type Score = {
 	playerName: string;
 	value: number;
-	constructor(playerName: string, value: number) {
-		this.playerName = playerName;
-		this.value = value;
-	}
-}
+};
 export class MaxchenRound {
 	readonly index: number;
 	scores: Score[];
 
 	constructor(index: number, playerNames: string[], scores?: Score[]) {
 		this.index = index;
-		this.scores = playerNames.map((playerName) => new Score(playerName, 0));
+		this.scores = playerNames.map((playerName) => ({ playerName, value: 0 }));
 
 		if (scores) this.scores = scores;
 	}
@@ -31,14 +24,7 @@ export class MaxchenRound {
 		return {
 			serialize: (value: MaxchenRound[]) => JSON.stringify(value),
 			deserialize: (data) =>
-				JSON.parse(data).map(
-					(d: MaxchenRound) =>
-						new MaxchenRound(
-							d.index,
-							[],
-							d.scores.map((score) => new Score(score.playerName, score.value))
-						)
-				)
+				JSON.parse(data).map((d: MaxchenRound) => new MaxchenRound(d.index, [], d.scores))
 		};
 	}
 }

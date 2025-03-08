@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getPlayersService } from '$lib/services/player.service';
-	import { setMaxchenService } from '../../lib/services/maxchen.service';
+	import { setMaxchenService } from '../../lib/services/maxchen.service.svelte';
 
 	const players = getPlayersService().players;
 	setMaxchenService(players);

@@ -3,7 +3,7 @@
 	import type { Player } from '$lib/models/Player';
 	import { getPlayersService } from '$lib/services/player.service';
 
-	const playerService getPlayersServicete();
+	const playerService = getPlayersService();
 </script>
 
 <div class="flex flex-wrap gap-2">
