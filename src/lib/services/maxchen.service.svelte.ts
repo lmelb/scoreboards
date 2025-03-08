@@ -1,5 +1,6 @@
 import { MaxchenRound } from '$lib/models/Maxchen';
 import type { Player } from '$lib/models/Player';
+import { check } from '$lib/utils';
 import { Context, PersistedState, StateHistory } from 'runed';
 
 export class MaxchenService {
@@ -29,43 +30,47 @@ export class MaxchenService {
 		return this.roundsState.current;
 	}
 
-	get currentRound() {
+	get hasStarted() {
+		return this.rounds.length > 0;
+	}
+
+	private get currentRound() {
 		return this.rounds[this.rounds.length - 1];
 	}
 
-	newRound() {
-		this.rounds.push(new MaxchenRound(this.playerNames));
+	start() {
+		check(!this.hasStarted, 'Game has already started');
+		this.addRound();
 	}
 
 	looseRound(playerName: string) {
-		this.roundsState.current[this.roundsState.current.length - 1].loose(playerName);
-		this.roundsState.current = [...this.roundsState.current];
-		if (
-			this.currentRound.scores
-				.values()
-				.toArray()
-				.some((score) => score >= 5)
-		) {
-			this.newRound();
+		if ([...this.currentRound.scores.values()].some((score) => score >= 5)) {
+			this.addRound();
 		}
-		console.log($state.snapshot(this.rounds));
+		this.currentRound.loose(playerName);
+		// needed to change the state
+		this.roundsState.current = [...this.roundsState.current];
 	}
 
 	reset() {
 		this.roundsState.current = [];
-		this.newRound();
+		this.addRound();
+	}
+
+	private addRound() {
+		this.rounds.push(new MaxchenRound(this.playerNames));
 	}
 
 	private handlePlayerChange() {
 		let playersHasChanged = false;
 		this.roundsState.current.forEach((round) => {
-			round.scores.keys().filter((playerName) => this.playerNames.includes(playerName));
+			round.scores = new Map(
+				round.scores.entries().filter(([playerName]) => this.playerNames.includes(playerName))
+			);
 			playersHasChanged = this.playerNames.some((name) => !round.scores.has(name));
 		});
 
-		if (playersHasChanged) this.newRound();
-
-		this.roundsState.current = [...this.roundsState.current];
+		if (playersHasChanged) this.addRound();
 	}
 }
 

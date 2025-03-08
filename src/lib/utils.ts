@@ -8,7 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 export function check(
 	condition: boolean,
 	message: string,
-	ErrorType: new (message: string) => Error
+	ErrorType?: new (message: string) => Error
 ) {
-	if (!condition) throw new ErrorType(message);
+	if (!condition) throw ErrorType !== undefined ? new ErrorType(message) : new Error(message);
 }

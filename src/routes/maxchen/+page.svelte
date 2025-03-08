@@ -9,15 +9,14 @@
 		TableHeader,
 		TableRow
 	} from '$lib/components/ui/table';
-	import TableFooter from '$lib/components/ui/table/table-footer.svelte';
 	import { Play, Redo, RotateCw, Undo } from 'lucide-svelte';
 	import { getMaxchenService } from '../../lib/services/maxchen.service.svelte';
 
 	const maxchenService = getMaxchenService();
 </script>
 
-{#if maxchenService.rounds.length === 0}
-	<Button onclick={() => maxchenService.newRound()}><Play /> Start Game</Button>
+{#if !maxchenService.hasStarted}
+	<Button onclick={() => maxchenService.start()}><Play /> Start Game</Button>
 {:else}
 	<div class="flex justify-end gap-2">
 		<Button
