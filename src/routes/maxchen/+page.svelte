@@ -2,6 +2,13 @@
 	import Tally from '$lib/components/closeable-badge/tally.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import {
+		Card,
+		CardContent,
+		CardDescription,
+		CardHeader,
+		CardTitle
+	} from '$lib/components/ui/card';
+	import {
 		Table,
 		TableBody,
 		TableCell,
@@ -15,47 +22,59 @@
 	const maxchenService = getMaxchenService();
 </script>
 
-{#if !maxchenService.hasStarted}
+{#if !maxchenService.hasPlayers}
+	<Button href="/players">Add Players</Button>
+{:else if !maxchenService.hasStarted}
 	<Button onclick={() => maxchenService.start()}><Play /> Start Game</Button>
 {:else}
 	<div class="flex justify-end gap-2">
 		<Button
-			variant="outline"
+			size="icon"
+			variant="ghost"
 			disabled={!maxchenService.history.canUndo}
 			onclick={maxchenService.history.undo}><Undo /></Button
 		>
-		<Button variant="outline" onclick={() => maxchenService.reset()}><RotateCw /></Button>
-		<Button
+		<Button size="icon" variant="ghost" onclick={() => maxchenService.reset()}><RotateCw /></Button>
+		<!-- <Button
+			size="icon"
 			variant="outline"
 			disabled={!maxchenService.history.canRedo}
 			onclick={maxchenService.history.redo}><Redo /></Button
-		>
+		> -->
 	</div>
-	<Table>
-		<TableHeader>
-			<TableRow>
-				{#each maxchenService.playerNames as playerName}
-					<TableHead>{playerName}</TableHead>
-				{/each}
-			</TableRow>
-		</TableHeader>
-		<TableBody>
-			{#each maxchenService.rounds as round}
-				<TableRow>
-					{#each round.scores as [playerName, score]}
-						<TableCell>
-							<Tally value={score} />
-						</TableCell>
+
+	<Card>
+		<CardHeader>
+			<CardTitle>Mäxchen</CardTitle>
+			<CardDescription>Click on the player names to edit the score</CardDescription>
+		</CardHeader>
+		<CardContent class="mt-4  p-2">
+			<Table>
+				<TableHeader>
+					<TableRow class="hover:bg-inherit">
+						<TableHead class="p-0 text-center">#</TableHead>
+						{#each maxchenService.playerNames as playerName}
+							<TableHead class="px-1 pb-2 text-center">
+								<Button variant="secondary" onclick={() => maxchenService.looseRound(playerName)}>
+									{playerName}
+								</Button>
+							</TableHead>
+						{/each}
+					</TableRow>
+				</TableHeader>
+				<TableBody>
+					{#each [...maxchenService.rounds].reverse() as round, i}
+						<TableRow class="hover:bg-inherit">
+							<TableCell class="px-0 text-center">{maxchenService.rounds.length - i}</TableCell>
+							{#each round.scores as [playerName, score]}
+								<TableCell class="px-0 py-2">
+									<Tally value={score} class="w-full" />
+								</TableCell>
+							{/each}
+						</TableRow>
 					{/each}
-				</TableRow>
-			{/each}
-		</TableBody>
-	</Table>
-	<div class="flex gap-2">
-		{#each maxchenService.playerNames as playerName}
-			<Button variant="outline" onclick={() => maxchenService.looseRound(playerName)}>
-				{playerName}
-			</Button>
-		{/each}
-	</div>
+				</TableBody>
+			</Table>
+		</CardContent>
+	</Card>
 {/if}

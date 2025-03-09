@@ -24,6 +24,10 @@ export class MaxchenService {
 				}),
 			(c) => (this.roundsState.current = c)
 		);
+
+		$effect(() => {
+			if (this.roundIsOver) this.addRound();
+		});
 	}
 
 	get rounds() {
@@ -32,6 +36,14 @@ export class MaxchenService {
 
 	get hasStarted() {
 		return this.rounds.length > 0;
+	}
+
+	get hasPlayers() {
+		return this.playerNames.length > 0;
+	}
+
+	private get roundIsOver() {
+		return [...this.currentRound.scores.values()].some((score) => score >= 5);
 	}
 
 	private get currentRound() {
@@ -44,9 +56,6 @@ export class MaxchenService {
 	}
 
 	looseRound(playerName: string) {
-		if ([...this.currentRound.scores.values()].some((score) => score >= 5)) {
-			this.addRound();
-		}
 		this.currentRound.loose(playerName);
 		// needed to change the state
 		this.roundsState.current = [...this.roundsState.current];
