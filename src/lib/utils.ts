@@ -12,3 +12,13 @@ export function check(
 ) {
 	if (!condition) throw ErrorType !== undefined ? new ErrorType(message) : new Error(message);
 }
+
+declare global {
+	interface Array<T> {
+		isEmpty(): boolean;
+	}
+}
+
+Array.prototype.isEmpty = function (): boolean {
+	return this.length === 0;
+};

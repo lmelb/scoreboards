@@ -13,6 +13,10 @@ export class MaxchenService {
 	constructor(playersService: PlayersService) {
 		this.maxchenRepository = new MaxchenRepository();
 		this.playersService = playersService;
+
+		if (this.rounds.isEmpty() || this.roundIsOver) {
+			this.addRound();
+		}
 		this.handlePlayerChange();
 
 		this.history = new StateHistory<MaxchenRound[]>(
@@ -25,11 +29,7 @@ export class MaxchenService {
 			(c) => this.maxchenRepository.saveAll(c)
 		);
 
-		this.addRound();
-
 		$effect(() => {
-			if (this.roundIsOver) this.addRound();
-
 			this.rounds.map((round) => {
 				// filter out removed players
 				round.scores = new Map(
@@ -71,6 +71,7 @@ export class MaxchenService {
 		this.currentRound.loose(playerName);
 		// needed to change the state
 		this.maxchenRepository.saveAll(this.rounds);
+		if (this.roundIsOver) this.addRound();
 	}
 
 	reset() {
