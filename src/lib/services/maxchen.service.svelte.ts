@@ -1,9 +1,7 @@
 import { MaxchenRound } from '$lib/models/Maxchen';
-import type { Player } from '$lib/models/Player';
-import { check } from '$lib/utils';
-import { Context, PersistedState, StateHistory } from 'runed';
-import { PlayersService } from './player.service.svelte';
 import { MaxchenRepository } from '$lib/persitence/maxchen';
+import { Context, StateHistory } from 'runed';
+import { PlayersService } from './player.service.svelte';
 
 export class MaxchenService {
 	private readonly maxchenRepository: MaxchenRepository;

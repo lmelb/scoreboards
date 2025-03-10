@@ -1,7 +1,7 @@
-import { Context, PersistedState } from 'runed';
+import { PlayerRepository } from '$lib/persitence/player';
+import { Context } from 'runed';
 import { Player, PlayerError } from '../models/Player';
 import { check } from '../utils';
-import { PlayerRepository } from '$lib/persitence/player';
 
 export class PlayersService {
 	private readonly playersRepository: PlayerRepository;

@@ -11,8 +11,7 @@
 	let { children } = $props();
 
 	const playerService = setPlayersService();
-	const maxchenService = setMaxchenService(playerService);
-	$inspect(playerService.players);
+	setMaxchenService(playerService);
 </script>
 
 <ModeWatcher />
