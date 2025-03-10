@@ -1,6 +1,7 @@
 import { Context, PersistedState } from 'runed';
 import { Player, PlayerError } from '../models/Player';
 import { check } from '../utils';
+import { sortItems } from '@rodrigodagostino/svelte-sortable-list';
 
 export class PlayersService {
 	private readonly playersState = new PersistedState<Player[]>('players', [], {
@@ -29,6 +30,13 @@ export class PlayersService {
 
 	nameExsits(playerName: string): boolean {
 		return this.players.some((it) => it.name.toLowerCase() === playerName.toLowerCase());
+	}
+
+	sort(from: number, to: number) {
+		const players = [...this.playersState.current];
+		const [movedPlayer] = players.splice(from, 1);
+		players.splice(to, 0, movedPlayer);
+		this.playersState.current = [...players];
 	}
 }
 

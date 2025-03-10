@@ -16,7 +16,7 @@
 		TableHeader,
 		TableRow
 	} from '$lib/components/ui/table';
-	import { Play, Redo, RotateCw, Undo } from 'lucide-svelte';
+	import { RotateCw, Undo } from 'lucide-svelte';
 	import { getMaxchenService } from '../../lib/services/maxchen.service.svelte';
 
 	const maxchenService = getMaxchenService();
@@ -24,10 +24,8 @@
 
 {#if !maxchenService.hasPlayers}
 	<Button href="/players">Add Players</Button>
-{:else if !maxchenService.hasStarted}
-	<Button onclick={() => maxchenService.start()}><Play /> Start Game</Button>
 {:else}
-	<div class="flex justify-end gap-2">
+	<div class="flex justify-end">
 		<Button
 			size="icon"
 			variant="ghost"
@@ -35,12 +33,6 @@
 			onclick={maxchenService.history.undo}><Undo /></Button
 		>
 		<Button size="icon" variant="ghost" onclick={() => maxchenService.reset()}><RotateCw /></Button>
-		<!-- <Button
-			size="icon"
-			variant="outline"
-			disabled={!maxchenService.history.canRedo}
-			onclick={maxchenService.history.redo}><Redo /></Button
-		> -->
 	</div>
 
 	<Card>

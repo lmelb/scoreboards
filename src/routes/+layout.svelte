@@ -1,15 +1,17 @@
 <script lang="ts">
-	import { setPlayersService } from '$lib/services/player.service';
 	import { ModeWatcher } from 'mode-watcher';
 	import '../app.css';
 	import { Dices } from 'lucide-svelte';
 	import LightSwith from '$lib/components/ui/button/light-swith/light-swith.svelte';
 	import { Toaster } from '$lib/components/ui/sonner';
 	import { activeNav } from '$lib/actions/active-nav.svelte';
+	import { setPlayersService } from '$lib/services/player.service.svelte';
+	import { setMaxchenService } from '$lib/services/maxchen.service.svelte';
 
 	let { children } = $props();
 
-	setPlayersService();
+	const playerService = setPlayersService();
+	const maxchenService = setMaxchenService(playerService);
 </script>
 
 <ModeWatcher />

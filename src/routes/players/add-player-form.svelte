@@ -4,9 +4,9 @@
 	import { Label } from '$lib/components/ui/label';
 
 	import { Player } from '$lib/models/Player';
-	import { getPlayersService } from '$lib/services/player.service';
 	import { UserPlus } from 'lucide-svelte';
 	import { validatePlayerName } from './player-name-validation';
+	import { getPlayersService } from '$lib/services/player.service.svelte';
 
 	const playerService = getPlayersService();
 

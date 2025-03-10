@@ -7,10 +7,10 @@
 		CardHeader,
 		CardTitle
 	} from '$lib/components/ui/card';
-	import { getPlayersService } from '$lib/services/player.service';
+	import { getPlayersService } from '$lib/services/player.service.svelte';
 
-	import AddPlayer from './add-player.svelte';
-	import PlayerChips from './player-chips.svelte';
+	import AddPlayerForm from './add-player-form.svelte';
+	import PlayerList from './player-list.svelte';
 
 	const players = getPlayersService().players;
 </script>
@@ -21,9 +21,9 @@
 		<CardDescription>Add a new players to the Game</CardDescription>
 	</CardHeader>
 	<CardContent>
-		<div class="grid gap-2">
-			<PlayerChips />
-			<AddPlayer />
+		<div class="grid gap-8">
+			<PlayerList />
+			<AddPlayerForm />
 		</div>
 	</CardContent>
 </Card>

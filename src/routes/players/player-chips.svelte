@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { CloseableBadge } from '$lib/components/closeable-badge';
-	import type { Player } from '$lib/models/Player';
-	import { getPlayersService } from '$lib/services/player.service';
+	import { getPlayersService } from '$lib/services/player.service.svelte';
 
 	const playerService = getPlayersService();
 </script>

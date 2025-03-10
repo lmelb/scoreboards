@@ -1,4 +1,4 @@
-import { PlayersService } from '$lib/services/player.service';
+import { PlayersService } from '$lib/services/player.service.svelte';
 import { z } from 'zod';
 
 export function validatePlayerName(
