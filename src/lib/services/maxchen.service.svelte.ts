@@ -3,26 +3,26 @@ import type { Player } from '$lib/models/Player';
 import { check } from '$lib/utils';
 import { Context, PersistedState, StateHistory } from 'runed';
 import { PlayersService } from './player.service.svelte';
+import { MaxchenRepository } from '$lib/persitence/maxchen';
 
 export class MaxchenService {
+	private readonly maxchenRepository: MaxchenRepository;
 	private readonly playersService: PlayersService;
-	private readonly roundsState = new PersistedState<MaxchenRound[]>('maxchen', [], {
-		serializer: MaxchenRound.serializer()
-	});
-
 	readonly history: StateHistory<MaxchenRound[]>;
 
 	constructor(playersService: PlayersService) {
+		this.maxchenRepository = new MaxchenRepository();
 		this.playersService = playersService;
 		this.handlePlayerChange();
+
 		this.history = new StateHistory<MaxchenRound[]>(
 			() =>
-				$state.snapshot(this.roundsState.current).map((it) => {
+				$state.snapshot(this.rounds).map((it) => {
 					const round = new MaxchenRound([]);
 					round.scores = it.scores;
 					return round;
 				}),
-			(c) => (this.roundsState.current = c)
+			(c) => this.maxchenRepository.saveAll(c)
 		);
 
 		this.addRound();
@@ -30,7 +30,7 @@ export class MaxchenService {
 		$effect(() => {
 			if (this.roundIsOver) this.addRound();
 
-			this.roundsState.current.forEach((round) => {
+			this.rounds.map((round) => {
 				// filter out removed players
 				round.scores = new Map(
 					round.scores.entries().filter(([playerName]) => this.playerNames.includes(playerName))
@@ -38,12 +38,14 @@ export class MaxchenService {
 
 				// sort scores by players and setup new players
 				round.scores = new Map(this.playerNames.map((name) => [name, round.scores.get(name) || 0]));
+
+				return round;
 			});
 		});
 	}
 
 	get rounds() {
-		return this.roundsState.current;
+		return this.maxchenRepository.getAll();
 	}
 
 	get hasStarted() {
@@ -68,16 +70,16 @@ export class MaxchenService {
 	looseRound(playerName: string) {
 		this.currentRound.loose(playerName);
 		// needed to change the state
-		this.roundsState.current = [...this.roundsState.current];
+		this.maxchenRepository.saveAll(this.rounds);
 	}
 
 	reset() {
-		this.roundsState.current = [];
+		this.maxchenRepository.deleteAll();
 		this.addRound();
 	}
 
 	private addRound() {
-		this.rounds.push(new MaxchenRound(this.playerNames));
+		this.maxchenRepository.save(new MaxchenRound(this.playerNames));
 	}
 
 	private handlePlayerChange() {}

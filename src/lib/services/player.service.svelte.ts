@@ -1,31 +1,37 @@
 import { Context, PersistedState } from 'runed';
 import { Player, PlayerError } from '../models/Player';
 import { check } from '../utils';
-import { sortItems } from '@rodrigodagostino/svelte-sortable-list';
+import { PlayerRepository } from '$lib/persitence/player';
 
 export class PlayersService {
-	private readonly playersState = new PersistedState<Player[]>('players', [], {
-		serializer: Player.serializer()
-	});
+	private readonly playersRepository: PlayerRepository;
+
+	constructor() {
+		this.playersRepository = new PlayerRepository();
+	}
 
 	get players() {
-		return this.playersState.current;
+		return this.playersRepository.getAll();
 	}
 
 	add(player: Player) {
-		check(!this.exsits(player), `Player ${player.name} already exists.`, PlayerError);
+		check(
+			!this.playersRepository.exists(player),
+			`Player ${player.name} already exists.`,
+			PlayerError
+		);
 
-		this.playersState.current = [...this.playersState.current, player];
+		this.playersRepository.save(player);
 	}
 
 	remove(player: Player) {
-		check(this.exsits(player), `Player ${player.name} does not exists.`, PlayerError);
+		check(
+			this.playersRepository.exists(player),
+			`Player ${player.name} does not exists.`,
+			PlayerError
+		);
 
-		this.playersState.current = this.players.filter((it) => !it.equals(player));
-	}
-
-	exsits(player: Player): boolean {
-		return this.players.some((it) => it.equals(player));
+		this.playersRepository.delete(player);
 	}
 
 	nameExsits(playerName: string): boolean {
@@ -33,10 +39,10 @@ export class PlayersService {
 	}
 
 	sort(from: number, to: number) {
-		const players = [...this.playersState.current];
+		const players = [...this.players];
 		const [movedPlayer] = players.splice(from, 1);
 		players.splice(to, 0, movedPlayer);
-		this.playersState.current = [...players];
+		this.playersRepository.saveAll(players);
 	}
 }
 

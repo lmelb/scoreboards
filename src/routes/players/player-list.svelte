@@ -51,5 +51,3 @@
 		</SortableItem>
 	{/each}
 </SortableList>
-
-{#each playerService.players as player}{/each}

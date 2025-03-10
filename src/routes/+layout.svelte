@@ -12,6 +12,7 @@
 
 	const playerService = setPlayersService();
 	const maxchenService = setMaxchenService(playerService);
+	$inspect(playerService.players);
 </script>
 
 <ModeWatcher />

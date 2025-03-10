@@ -11,6 +11,10 @@ export class MaxchenRound {
 		this.scores.set(playerName, this.scores.get(playerName)! + 1);
 	}
 
+	equals(other: MaxchenRound): boolean {
+		return this === other;
+	}
+
 	static serializer(): MaxchenSerializer {
 		return {
 			serialize: (value) =>
