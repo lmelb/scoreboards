@@ -34,7 +34,7 @@
 		<SortableItem {...item} {index}>
 			<div class="flex items-center justify-stretch gap-1">
 				<Handle>
-					<GripVertical class="size-5 text-primary/20" />
+					<GripVertical class="size-5 text-secondary-foreground/40 " />
 				</Handle>
 				<div class="w-full rounded-md bg-muted px-3 py-2">
 					{item.player.name}

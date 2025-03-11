@@ -11,13 +11,13 @@
 		<CardTitle>Welcome to GameScore!</CardTitle>
 	</CardHeader>
 	<CardContent>
-		{#if players.length === 0}
+		{#if players.isEmpty()}
 			<p class="mb-4">Start by adding Players to your game</p>
 			<Button href="/players">Add Players</Button>
 		{:else}
 			<p class="mb-4">Welcome back time for another round?</p>
 			<div class="flex gap-4">
-				<Button href="##">Select Game</Button>
+				<Button href="/maxchen">Play Maxchen</Button>
 				<Button variant="secondary" href="/players">Manage Players</Button>
 			</div>
 		{/if}

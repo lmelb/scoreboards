@@ -39,7 +39,7 @@ export class Repository<T extends { equals: (item: T) => boolean }> {
 	}
 
 	delete(item: T): T[] {
-		return this.items.current.filter((it) => !it.equals(item));
+		return (this.items.current = this.items.current.filter((it) => !it.equals(item)));
 	}
 
 	deleteAll() {
