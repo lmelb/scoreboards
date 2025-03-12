@@ -1,38 +1,34 @@
-# sv
+# Scoreboard
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+Welcome to our Scoreboard app! This handy tool helps you keep track of players and scores for all your favorite card and board games. No need for pen and paper anymore! Right now, you can enjoy the Mäxchen game mode, with more to come.
 
-## Creating a project
+## Concept
 
-If you're seeing this, you've probably already done this step. Congrats!
+### Storage
 
-```bash
-# create a new project in the current directory
-npx sv create
+Our app uses only local storage, eliminating the need for a database. This allows the app to be hosted as a static site, reducing both cost and energy consumption.
 
-# create a new project in my-app
-npx sv create my-app
-```
+### Clean Architecture
 
-## Developing
+We have implemented a clean architecture, making it easy to add further game modes with minimal effort. This ensures that the app remains maintainable and scalable as new features are introduced.
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+## Start up
 
-```bash
-npm run dev
+To get started with the Svelte app using `pnpm`, follow these steps:
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+2. **Install dependencies**: Navigate to the project directory and install the dependencies:
 
-## Building
+   ```sh
+   pnpm i
+   ```
 
-To create a production version of your app:
+3. **Run the development server**: Start the development server to see your app in action:
 
-```bash
-npm run build
-```
+   ```sh
+   pnpm dev
+   ```
 
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+4. **Build for production**: When you're ready to deploy, build the app for production:
+   ```sh
+   pnpm build
+   ```
