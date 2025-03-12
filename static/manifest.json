@@ -1,0 +1,13 @@
+{
+    "name": "Mäxchen",
+    "short_name": "Mäxchen",
+    "icons": [
+        {
+            "src": "favicon.png",
+            "sizes": "512x512"
+        }
+    ],
+    "background_color": "#000000",
+    "theme_color": "#000000",
+    "display": "fullscreen"
+}
