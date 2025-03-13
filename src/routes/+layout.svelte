@@ -29,7 +29,7 @@
 				class="flex items-center gap-2 text-lg font-semibold md:text-base"
 			>
 				<Dices class="h-6 w-6" />
-				<h1>GameScore</h1>
+				<h1>SimpleScore</h1>
 			</a>
 			<a
 				use:activeNav
