@@ -8,6 +8,7 @@
 		CardTitle
 	} from '$lib/components/ui/card';
 	import { getPlayersService } from '$lib/services/player.service.svelte';
+	import { routes } from '../routes';
 
 	import AddPlayerForm from './add-player-form.svelte';
 	import PlayerList from './player-list.svelte';
@@ -28,5 +29,5 @@
 	</CardContent>
 </Card>
 {#if players.length > 0}
-	<Button href="/maxchen">Play Mäxchen</Button>
+	<Button href={routes.maxchen}>Play Mäxchen</Button>
 {/if}

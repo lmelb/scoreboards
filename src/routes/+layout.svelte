@@ -7,6 +7,7 @@
 	import { activeNav } from '$lib/actions/active-nav.svelte';
 	import { setPlayersService } from '$lib/services/player.service.svelte';
 	import { setMaxchenService } from '$lib/services/maxchen.service.svelte';
+	import { routes } from './routes';
 
 	let { children } = $props();
 
@@ -22,20 +23,24 @@
 		class="sticky top-0 z-10 flex h-16 items-center justify-between gap-4 border-b bg-background px-4 md:px-6"
 	>
 		<nav class="flex flex-row items-center gap-6 text-lg font-medium md:gap-5 md:text-sm lg:gap-6">
-			<a use:activeNav href="/" class="flex items-center gap-2 text-lg font-semibold md:text-base">
+			<a
+				use:activeNav
+				href={routes.root}
+				class="flex items-center gap-2 text-lg font-semibold md:text-base"
+			>
 				<Dices class="h-6 w-6" />
 				<h1>GameScore</h1>
 			</a>
 			<a
 				use:activeNav
-				href="/players"
+				href={routes.players}
 				class="text-foreground transition-colors hover:text-foreground"
 			>
 				Players
 			</a>
 			<a
 				use:activeNav
-				href="/maxchen"
+				href={routes.maxchen}
 				class="text-foreground transition-colors hover:text-foreground"
 			>
 				Mäxchen

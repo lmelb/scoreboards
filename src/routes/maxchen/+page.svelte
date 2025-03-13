@@ -18,12 +18,13 @@
 	} from '$lib/components/ui/table';
 	import { RotateCw, Undo } from 'lucide-svelte';
 	import { getMaxchenService } from '../../lib/services/maxchen.service.svelte';
+	import { routes } from '../routes';
 
 	const maxchenService = getMaxchenService();
 </script>
 
 {#if !maxchenService.hasPlayers}
-	<Button href="/players">Add Players</Button>
+	<Button href={routes.players}>Add Players</Button>
 {:else}
 	<div class="flex justify-end">
 		<Button
