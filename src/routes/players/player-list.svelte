@@ -9,7 +9,7 @@
 		Handle,
 		type SortEventDetail
 	} from '@rodrigodagostino/svelte-sortable-list';
-	import type { Player } from '$lib/models/Player';
+	import type { Player } from '$lib/models/player';
 	import { getPlayersService } from '$lib/services/player.service.svelte';
 
 	const playerService = getPlayersService();

@@ -37,9 +37,9 @@
 </script>
 
 <form {onsubmit}>
-	<div class="flex items-end gap-2 pb-2">
-		<div>
-			<Label for="name">Player name</Label>
+	<div class="grid w-full max-w-sm items-center gap-1.5">
+		<Label for="name">Player name</Label>
+		<div class="flex gap-2">
 			<Input
 				id="name"
 				name="name"
@@ -50,13 +50,12 @@
 				bind:ref={playerNameInput}
 				{onchange}
 			/>
+			<Button variant="secondary" type="submit">
+				<UserPlus class="mr-2 h-4 w-4" /> Add
+			</Button>
 		</div>
-		<Button variant="secondary" type="submit">
-			<UserPlus class="mr-2 h-4 w-4" /> Add
-		</Button>
+		{#if !validation.valid}
+			<div class="text-sm font-medium text-destructive">{validation.errors.join(', and ')}</div>
+		{/if}
 	</div>
-
-	{#if !validation.valid}
-		<div class="text-sm font-medium text-destructive">{validation.errors.join(', and ')}</div>
-	{/if}
 </form>

@@ -1,16 +1,16 @@
-import { MaxchenRound } from '$lib/models/Maxchen';
+import { MaxchenRound } from '$lib/models/maxchen';
 import { MaxchenRepository } from '$lib/persitence/maxchen';
 import { Context, StateHistory } from 'runed';
 import { PlayersService } from './player.service.svelte';
 
 export class MaxchenService {
-	private readonly maxchenRepository: MaxchenRepository;
 	private readonly playersService: PlayersService;
+	private readonly maxchenRepository: MaxchenRepository;
 	readonly history: StateHistory<MaxchenRound[]>;
 
 	constructor(playersService: PlayersService) {
-		this.maxchenRepository = new MaxchenRepository();
 		this.playersService = playersService;
+		this.maxchenRepository = new MaxchenRepository();
 
 		if (this.rounds.isEmpty() || this.roundIsOver) {
 			this.addRound();

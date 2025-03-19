@@ -1,4 +1,4 @@
-import { MaxchenRound } from '$lib/models/Maxchen';
+import { MaxchenRound } from '$lib/models/maxchen';
 import { Repository } from './repository';
 
 export class MaxchenRepository extends Repository<MaxchenRound> {

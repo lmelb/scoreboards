@@ -8,11 +8,13 @@
 	import { setPlayersService } from '$lib/services/player.service.svelte';
 	import { setMaxchenService } from '$lib/services/maxchen.service.svelte';
 	import { routes } from './routes';
+	import { setDoppelkopfService } from '$lib/services/doppelkopf.service.svelte';
 
 	let { children } = $props();
 
 	const playerService = setPlayersService();
 	setMaxchenService(playerService);
+	setDoppelkopfService(playerService);
 </script>
 
 <ModeWatcher />
@@ -44,6 +46,13 @@
 				class="text-foreground transition-colors hover:text-foreground"
 			>
 				Mäxchen
+			</a>
+			<a
+				use:activeNav
+				href={routes.doppelkopf}
+				class="text-foreground transition-colors hover:text-foreground"
+			>
+				Doppelkopf
 			</a>
 		</nav>
 		<LightSwith />

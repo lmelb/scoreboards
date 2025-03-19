@@ -1,6 +1,6 @@
 import { PlayerRepository } from '$lib/persitence/player';
 import { Context } from 'runed';
-import { Player, PlayerError } from '../models/Player';
+import { Player, PlayerError } from '../models/player';
 import { check } from '../utils';
 
 export class PlayersService {

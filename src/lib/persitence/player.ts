@@ -1,4 +1,4 @@
-import { Player } from '$lib/models/Player';
+import { Player } from '$lib/models/player';
 import { Repository } from './repository';
 
 export class PlayerRepository extends Repository<Player> {
