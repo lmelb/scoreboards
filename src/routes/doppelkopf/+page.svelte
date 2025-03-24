@@ -11,13 +11,13 @@
 </script>
 
 {#if !service.hasPlayers}
-	<Button href={routes.players}>Add Players</Button>
+	<Button href={routes.players.url}>Add Players</Button>
 {:else if service.playerNames.length < 4}
 	<p>
 		Doppelkopf can only be Played with at least 4 players (cureently you have {service.playerNames
 			.length} PLayers).
 	</p>
-	<Button href={routes.players}>Manage Players</Button>
+	<Button href={routes.players.url}>Manage Players</Button>
 {:else}
 	<Toolbar />
 	<Card.Root>

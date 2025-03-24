@@ -24,7 +24,7 @@
 </script>
 
 {#if !maxchenService.hasPlayers}
-	<Button href={routes.players}>Add Players</Button>
+	<Button href={routes.players.url}>Add Players</Button>
 {:else}
 	<div class="flex justify-end">
 		<Button
