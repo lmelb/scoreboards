@@ -9,7 +9,7 @@
 
 <Card>
 	<CardHeader>
-		<CardTitle>Welcome to GameScore!</CardTitle>
+		<CardTitle>Welcome to SimpleScore!</CardTitle>
 	</CardHeader>
 	<CardContent>
 		{#if players.isEmpty()}
