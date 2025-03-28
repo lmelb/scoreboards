@@ -13,7 +13,7 @@
 	import AddPlayerForm from './add-player-form.svelte';
 	import PlayerList from './player-list.svelte';
 
-	const players = getPlayersService().players;
+	const numberOfPlayers = $derived(getPlayersService().players.length);
 </script>
 
 <Card>
@@ -28,6 +28,27 @@
 		</div>
 	</CardContent>
 </Card>
-{#if players.length > 0}
-	<Button href={routes.maxchen}>Play Mäxchen</Button>
-{/if}
+<Card>
+	<CardHeader>
+		<CardTitle>Select Game</CardTitle>
+		<CardDescription
+			>The following games can be played with {numberOfPlayers} players.</CardDescription
+		>
+	</CardHeader>
+	<CardContent>
+		<div class="grid gap-8">
+			{#if numberOfPlayers <= 1}
+				You need to add players before you can start a game.
+			{/if}
+			{#if numberOfPlayers > 1}
+				<Button href={routes.games.maxchen.url}>Play {routes.games.maxchen.title}</Button>
+			{/if}
+			{#if numberOfPlayers > 2}
+				<Button href={routes.games.wizard.url}>Play {routes.games.wizard.title}</Button>
+			{/if}
+			{#if numberOfPlayers == 4}
+				<Button href={routes.games.doppelkopf.url}>Play {routes.games.doppelkopf.title}</Button>
+			{/if}
+		</div>
+	</CardContent>
+</Card>

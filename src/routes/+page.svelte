@@ -14,12 +14,12 @@
 	<CardContent>
 		{#if players.isEmpty()}
 			<p class="mb-4">Start by adding Players to your game</p>
-			<Button href={routes.players}>Add Players</Button>
+			<Button href={routes.players.url}>Add Players</Button>
 		{:else}
 			<p class="mb-4">Welcome back time for another round?</p>
 			<div class="flex gap-4">
-				<Button href={routes.maxchen}>Play Maxchen</Button>
-				<Button variant="secondary" href={routes.players}>Manage Players</Button>
+				<Button href={routes.games.maxchen.url}>Play Maxchen</Button>
+				<Button variant="secondary" href={routes.players.url}>Manage Players</Button>
 			</div>
 		{/if}
 	</CardContent>

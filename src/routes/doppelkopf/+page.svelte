@@ -10,25 +10,26 @@
 	const service = getDoppelkopfService();
 </script>
 
-{#if !service.hasPlayers}
-	<Button href={routes.players.url}>Add Players</Button>
-{:else if service.playerNames.length < 4}
-	<p>
-		Doppelkopf can only be Played with at least 4 players (cureently you have {service.playerNames
-			.length} PLayers).
-	</p>
-	<Button href={routes.players.url}>Manage Players</Button>
-{:else}
+{#if service.playerNames.length >= 4}
 	<Toolbar />
-	<Card.Root>
-		<Card.Header>
-			<Card.Title>Doppelkopf</Card.Title>
-			<Card.Description>
-				<AddScoreForm />
-			</Card.Description>
-		</Card.Header>
-		<Card.Content class="mt-4  p-2">
-			<ScoreBoard />
-		</Card.Content>
-	</Card.Root>
 {/if}
+<Card.Root>
+	<Card.Header>
+		<Card.Title>Doppelkopf</Card.Title>
+		<Card.Description>Some Doppelkpf info and rule link</Card.Description>
+	</Card.Header>
+	<Card.Content class="mt-4  p-2">
+		{#if !service.hasPlayers}
+			<Button href={routes.players.url}>Add Players</Button>
+		{:else if service.playerNames.length < 4}
+			<p>
+				Doppelkopf can only be Played with at least 4 players (cureently you have {service
+					.playerNames.length} PLayers).
+			</p>
+			<Button href={routes.players.url}>Manage Players</Button>
+		{:else}
+			<AddScoreForm />
+			<ScoreBoard />
+		{/if}
+	</Card.Content>
+</Card.Root>

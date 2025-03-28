@@ -119,7 +119,7 @@
 		<Form.Control>
 			{#snippet children({ props })}
 				<Form.Label>Score</Form.Label>
-				<div class="flex gap-2">
+				<div class="flex gap-3 pl-3">
 					<Slider
 						type="single"
 						{...props}
