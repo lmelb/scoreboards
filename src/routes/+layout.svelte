@@ -11,110 +11,73 @@
 	import { Dices, Moon, Sun, Users } from 'lucide-svelte';
 	import '../app.css';
 	import { routes } from './routes';
+	import { Button } from '$lib/components/ui/button';
+	import * as Select from '$lib/components/ui/select';
+	import { goto } from '$app/navigation';
+	import * as Tooltip from '$lib/components/ui/tooltip';
 
 	let { children } = $props();
-
-	let mobileOpen = $state(false);
 
 	const playerService = setPlayersService();
 	setMaxchenService(playerService);
 	setDoppelkopfService(playerService);
 	setWizardService(playerService);
+
+	let activeRoute = $derived(
+		Object.values(routes.games).find((it) => it.url === page.url.pathname)
+	);
 </script>
 
 <ModeWatcher />
 <Toaster />
 
-<Sidebar.Provider bind:mobileOpen>
-	<Sidebar.Root variant="inset" collapsible="icon">
-		<Sidebar.Header>
-			<Sidebar.Menu>
-				<Sidebar.MenuItem>
-					<Sidebar.MenuButton size="lg">
-						{#snippet child({ props }: { props: Record<string, any> })}
-							<a href={routes.root.url} {...props}>
-								<div
-									class="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground"
-								>
-									<Dices class="size-4" />
-								</div>
-								<div class="grid flex-1 text-left text-sm leading-tight">
-									<span class="truncate font-semibold">{routes.root.title}</span>
-									<!-- <span class="truncate text-xs">Enterprise</span> -->
-								</div>
-							</a>
-						{/snippet}
-					</Sidebar.MenuButton>
-				</Sidebar.MenuItem>
-			</Sidebar.Menu>
-		</Sidebar.Header>
-		<Sidebar.Content>
-			<Sidebar.Group>
-				<Sidebar.GroupLabel>Setup</Sidebar.GroupLabel>
-				<Sidebar.Menu>
-					<Sidebar.MenuItem>
-						<Sidebar.MenuButton isActive={page.url.pathname === routes.players.url}>
-							{#snippet child({ props })}
-								<a href={routes.players.url} {...props}>
-									<Users />
-									<span>{routes.players.title}</span>
-								</a>
-							{/snippet}
-						</Sidebar.MenuButton>
-					</Sidebar.MenuItem>
-				</Sidebar.Menu>
-			</Sidebar.Group>
+<div class="sticky top-0 z-10 flex h-16 items-center border bg-background">
+	<nav class="container flex max-w-4xl items-center gap-4 py-4">
+		<a href={routes.root.url} class="flex items-center gap-2">
+			<routes.root.icon class="size-10 rounded-sm bg-foreground p-2 text-background" />
+			<span class="hidden sm:inline">{routes.root.title}</span>
+		</a>
+		<div class="ms-auto"></div>
+		<Select.Root type="single" value={page.url.pathname}>
+			<Select.Trigger class="flex w-[18ch] gap-2">
+				{#if activeRoute}
+					<activeRoute.icon /> {activeRoute.title}
+				{:else}
+					Select Game
+				{/if}
+			</Select.Trigger>
+			<Select.Content>
+				{#each Object.values(routes.games) as item (item.title)}
+					<Select.Item value={item.url} onclick={() => goto(item.url)}>
+						<item.icon />
+						{item.title}
+					</Select.Item>
+				{/each}
+			</Select.Content>
+		</Select.Root>
+		<Tooltip.Provider>
+			<Tooltip.Root>
+				<Tooltip.Trigger>
+					<Button size="icon" variant="ghost" href={routes.players.url}>
+						<Users />
+					</Button>
+				</Tooltip.Trigger>
+				<Tooltip.Content>
+					<p>Manage players</p>
+				</Tooltip.Content>
+			</Tooltip.Root>
+		</Tooltip.Provider>
+	</nav>
+</div>
 
-			<Sidebar.Group>
-				<Sidebar.GroupLabel>Games</Sidebar.GroupLabel>
-				<Sidebar.Menu>
-					{#each Object.values(routes.games) as item (item.title)}
-						<Sidebar.MenuItem>
-							<Sidebar.MenuButton isActive={page.url.pathname === item.url}>
-								{#snippet child({ props })}
-									<a href={item.url} {...props} onclick={() => (mobileOpen = false)}>
-										<item.icon />
-										<span>{item.title}</span>
-									</a>
-								{/snippet}
-							</Sidebar.MenuButton>
-						</Sidebar.MenuItem>
-					{/each}
-				</Sidebar.Menu>
-			</Sidebar.Group>
-		</Sidebar.Content>
-		<Sidebar.Footer>
-			<Sidebar.Group>
-				<Sidebar.Menu>
-					<Sidebar.MenuItem>
-						<Sidebar.MenuButton>
-							{#snippet child({ props })}
-								<button {...props} onclick={toggleMode}>
-									{#if $mode === 'dark'}
-										<Sun /> <span>Light Mode</span>
-									{:else}
-										<Moon /> <span>Dark Mode</span>
-									{/if}
-								</button>
-							{/snippet}
-						</Sidebar.MenuButton>
-					</Sidebar.MenuItem>
-				</Sidebar.Menu>
-			</Sidebar.Group>
-		</Sidebar.Footer>
-	</Sidebar.Root>
-	<Sidebar.Inset>
-		<header
-			class="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12"
-		>
-			<div class="flex w-full items-center px-4">
-				<Sidebar.Trigger class="-ml-1" />
-			</div>
-		</header>
-		<div class="flex flex-1 flex-col gap-4 p-4 pt-0">
-			{#if children}
-				{@render children()}
-			{/if}
-		</div>
-	</Sidebar.Inset>
-</Sidebar.Provider>
+<main class="container my-4 grid max-w-4xl gap-4">
+	{#if children}
+		{@render children()}
+	{/if}
+</main>
+
+<footer class="mt-auto flex justify-center">
+	<Button variant="link" class="text-muted-foreground" href={routes.privacy.url}
+		>{routes.privacy.title}</Button
+	>
+</footer>

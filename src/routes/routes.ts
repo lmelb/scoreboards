@@ -1,12 +1,13 @@
 import { base } from '$app/paths';
-import { Dice1 } from 'lucide-svelte';
+import { Dice1, Dices, Users, UsersRound, Wand, WandIcon } from 'lucide-svelte';
 
 export const routes = {
-	root: { icon: Dice1, title: 'SimpleScore', url: `${base}/` },
-	players: { icon: Dice1, title: 'Players', url: `${base}/players` },
+	root: { icon: Dices, title: 'SimpleScore', url: `${base}/` },
+	players: { icon: Users, title: 'Players', url: `${base}/players` },
 	games: {
 		maxchen: { icon: Dice1, title: 'Mäxchen', url: `${base}/maxchen` },
-		doppelkopf: { icon: Dice1, title: 'Doppelkopf', url: `${base}/doppelkopf` },
-		wizard: { icon: Dice1, title: 'Wizard', url: `${base}/wizard` }
-	}
+		doppelkopf: { icon: UsersRound, title: 'Doppelkopf', url: `${base}/doppelkopf` },
+		wizard: { icon: Wand, title: 'Wizard', url: `${base}/wizard` }
+	},
+	privacy: { title: 'privacy policy', url: '/privacy-policy' }
 };
