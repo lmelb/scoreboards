@@ -9,5 +9,5 @@ export const routes = {
 		doppelkopf: { icon: UsersRound, title: 'Doppelkopf', url: `${base}/doppelkopf` },
 		wizard: { icon: Wand, title: 'Wizard', url: `${base}/wizard` }
 	},
-	privacy: { title: 'privacy policy', url: '/privacy-policy' }
+	privacy: { title: 'privacy policy', url: `${base}/privacy-policy` }
 };
