@@ -11,7 +11,7 @@
 		<Table.Row class="hover:bg-inherit">
 			<Table.Head class="p-0 text-center">#</Table.Head>
 			{#each service.playerNames as playerName}
-				<Table.Head class="px-1 pb-2 text-center">
+				<Table.Head class="px-1 pb-2 text-center font-bold text-card-foreground">
 					{playerName}
 				</Table.Head>
 			{/each}
@@ -22,10 +22,10 @@
 			<Table.Row class="hover:bg-inherit">
 				<Table.Cell class="px-0 text-center">{service.rounds.length - i}</Table.Cell>
 				{#each round as player}
-					<Table.Cell class="px-0 py-2 text-left">
-						<strong>{player.score ?? ' - '}</strong>
-						<span class="text-muted-foreground">
-							({player.expectedTricks}|{player.actualTricks ?? ' - '})
+					<Table.Cell class="px-0 py-2 text-center">
+						<strong>{player.score}</strong>
+						<span class="text-xs text-muted-foreground">
+							{player.expectedTricks}
 						</span>
 					</Table.Cell>
 				{/each}

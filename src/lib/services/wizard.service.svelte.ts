@@ -7,20 +7,28 @@ import { string } from 'zod';
 export class WizardService {
 	private readonly repository: WizardRepository;
 	readonly history: StateHistory<WizardRound[]>;
-
-	readonly playerNames: string[];
+	private readonly playersService: PlayersService;
 
 	constructor(playersService: PlayersService) {
-		this.playerNames = playersService.players.map((p) => p.name);
+		this.playersService = playersService;
 		this.repository = new WizardRepository();
 		this.history = new StateHistory<WizardRound[]>(
 			() => this.repository.getAll(),
 			(c) => this.repository.replace(c)
 		);
+
+		watch(
+			() => this.playerNames,
+			(playerNames) => this.handlePlayerChange(playerNames)
+		);
 	}
 
 	get rounds() {
 		return this.repository.getAll();
+	}
+
+	get playerNames() {
+		return this.playersService.players.map((p) => p.name);
 	}
 
 	get possibleTricks() {
@@ -62,6 +70,10 @@ export class WizardService {
 
 	reset() {
 		this.repository.deleteAll();
+	}
+
+	private handlePlayerChange(playerNames: string[]) {
+		this.reset();
 	}
 }
 
